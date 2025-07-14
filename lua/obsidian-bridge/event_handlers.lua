@@ -31,7 +31,13 @@ local function get_active_buffer_obsidian_markdown_filename()
 		return nil
 	end
 
-	return filename_incl_path:match(".*/" .. vault_name .. "/(.*)")
+	local function escape_lua_pattern(s)
+		-- Escapes all non-alphanumeric characters and special characters (%W matches any non-word character)
+		return s:gsub("(%W)", "%%%1")
+	end
+
+	local escaped_vault_name = escape_lua_pattern(vault_name)
+	return filename_incl_path:match(".*/" .. escaped_vault_name .. "/?(.*)")
 end
 
 function M.on_buf_enter()
