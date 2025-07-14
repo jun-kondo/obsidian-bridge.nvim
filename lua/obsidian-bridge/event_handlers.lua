@@ -36,9 +36,7 @@ local function get_active_buffer_obsidian_markdown_filename()
 	end
 
 	local escaped_vault_name = escape_lua_pattern(vault_name)
-	local relative_path = filename_incl_path:match(".*/" .. escaped_vault_name .. "/?(.*)")
-
-	return relative_path
+	return filename_incl_path:match(".*/" .. escaped_vault_name .. "/?(.*)")
 end
 
 function M.on_buf_enter()
