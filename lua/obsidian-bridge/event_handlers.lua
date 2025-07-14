@@ -30,6 +30,7 @@ local function get_active_buffer_obsidian_markdown_filename()
 	if not vault_name then
 		return nil
 	end
+
 	local function escape_lua_pattern(s)
 		-- Escapes all non-alphanumeric characters and special characters (%W matches any non-word character)
 		return s:gsub("(%W)", "%%%1")
@@ -40,14 +41,15 @@ local function get_active_buffer_obsidian_markdown_filename()
 end
 
 function M.on_buf_enter()
-	local filename = get_active_buffer_obsidian_markdown_filename()
 	if not config.on then
 		return
 	end
 
+	local filename = get_active_buffer_obsidian_markdown_filename()
 	if filename == nil then
 		return
 	end
+
 	-- Reset prev_line when we swap buffers, we can't be sure that we
 	-- can skip scrolling, setting to nil to make sure we always scroll on
 	-- first vertical cursor movement.
@@ -60,13 +62,14 @@ function M.on_buf_enter()
 end
 
 function M.on_cursor_moved()
-	local filename = get_active_buffer_obsidian_markdown_filename()
 	if not config.on then
 		return
 	end
-	if filename == nil then
+
+	if get_active_buffer_obsidian_markdown_filename() == nil then
 		return
 	end
+
 	local cursor = vim.api.nvim_win_get_cursor(0)
 	local line = cursor[1]
 
